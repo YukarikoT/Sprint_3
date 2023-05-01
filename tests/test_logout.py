@@ -1,26 +1,24 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-
+from locators import TestLocators
+from data import TestUrls
+from data import TestData
 
 class TestLogOut:
 
-    def test_logout_from_account(self, url, data):
-        driver = webdriver.Chrome()
-        driver.get(url[0])
-        driver.implicitly_wait(5)
-        driver.find_element(By.XPATH, ".//p[text()='Личный Кабинет']").click()
-        driver.find_element(By.XPATH, ".//fieldset[1]//input").send_keys(data[4])
-        driver.find_element(By.NAME, "Пароль").send_keys(data[5])
-        driver.find_element(By.XPATH, ".//button[text()='Войти']").click()
-        WebDriverWait(driver, 3).until(
-            expected_conditions.visibility_of_element_located((By.XPATH, ".//button[text()='Оформить заказ']")))
-        driver.find_element(By.XPATH, ".//p[text()='Личный Кабинет']").click()
-        driver.find_element(By.XPATH, ".//button[text()='Выход']").click()
-        WebDriverWait(driver, 3).until(
-            expected_conditions.visibility_of_element_located((By.XPATH, ".//button[text()='Войти']")))
-        assert driver.current_url == url[2]
-        driver.quit()
-
+    def test_logout_from_account(self, get_driver):
+        self.driver.get(TestUrls.main_url)
+        self.driver.find_element(*TestLocators.ACCOUNT_BUTTON).click()
+        self.driver.find_element(*TestLocators.EMAIL_INPUT_LOGIN).send_keys(TestData.valid_email)
+        self.driver.find_element(*TestLocators.PASSWORD_INPUT_LOGIN).send_keys(TestData.valid_password)
+        self.driver.find_element(*TestLocators.LOGIN_BUTTON_LOGIN).click()
+        WebDriverWait(self.driver, 3).until(
+            expected_conditions.visibility_of_element_located(TestLocators.MAKE_ORDER_BUTTON))
+        self.driver.find_element(*TestLocators.ACCOUNT_BUTTON).click()
+        WebDriverWait(self.driver, 3).until(
+            expected_conditions.element_to_be_clickable(TestLocators.LOGOUT_BUTTON)).click()
+        WebDriverWait(self.driver, 3).until(
+            expected_conditions.visibility_of_element_located(TestLocators.LOGIN_BUTTON_LOGIN))
+        assert self.driver.current_url == TestUrls.log_url
+        self.driver.quit()
 
