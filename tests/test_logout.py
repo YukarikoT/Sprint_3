@@ -6,19 +6,18 @@ from data import TestData
 
 class TestLogOut:
 
-    def test_logout_from_account(self, get_driver):
-        self.driver.get(TestUrls.main_url)
-        self.driver.find_element(*TestLocators.ACCOUNT_BUTTON).click()
-        self.driver.find_element(*TestLocators.EMAIL_INPUT_LOGIN).send_keys(TestData.valid_email)
-        self.driver.find_element(*TestLocators.PASSWORD_INPUT_LOGIN).send_keys(TestData.valid_password)
-        self.driver.find_element(*TestLocators.LOGIN_BUTTON_LOGIN).click()
-        WebDriverWait(self.driver, 3).until(
+    def test_logout_from_account(self, browser):
+        browser.get(TestUrls.main_url)
+        browser.find_element(*TestLocators.ACCOUNT_BUTTON).click()
+        browser.find_element(*TestLocators.EMAIL_INPUT_LOGIN).send_keys(TestData.valid_email)
+        browser.find_element(*TestLocators.PASSWORD_INPUT_LOGIN).send_keys(TestData.valid_password)
+        browser.find_element(*TestLocators.LOGIN_BUTTON_LOGIN).click()
+        WebDriverWait(browser, 3).until(
             expected_conditions.visibility_of_element_located(TestLocators.MAKE_ORDER_BUTTON))
-        self.driver.find_element(*TestLocators.ACCOUNT_BUTTON).click()
-        WebDriverWait(self.driver, 3).until(
+        browser.find_element(*TestLocators.ACCOUNT_BUTTON).click()
+        WebDriverWait(browser, 3).until(
             expected_conditions.element_to_be_clickable(TestLocators.LOGOUT_BUTTON)).click()
-        WebDriverWait(self.driver, 3).until(
+        WebDriverWait(browser, 3).until(
             expected_conditions.visibility_of_element_located(TestLocators.LOGIN_BUTTON_LOGIN))
-        assert self.driver.current_url == TestUrls.log_url
-        self.driver.quit()
+        assert browser.current_url == TestUrls.log_url, 'Выход из аккаунта не выполнен!'
 

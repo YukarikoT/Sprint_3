@@ -7,47 +7,43 @@ from data import TestData
 
 class TestLogin:
 
-    def test_login_from_main(self, get_driver):
-        self.driver.get(TestUrls.main_url)
-        self.driver.find_element(*TestLocators.LOGIN_ACCOUNT_BUTTON).click()
-        self.driver.find_element(*TestLocators.EMAIL_INPUT_LOGIN).send_keys(TestData.valid_email)
-        self.driver.find_element(*TestLocators.PASSWORD_INPUT_LOGIN).send_keys(TestData.valid_password)
-        self.driver.find_element(*TestLocators.LOGIN_BUTTON_LOGIN).click()
-        WebDriverWait(self.driver, 3).until(
+    def test_login_from_main(self, browser):
+        browser.get(TestUrls.main_url)
+        browser.find_element(*TestLocators.LOGIN_ACCOUNT_BUTTON).click()
+        browser.find_element(*TestLocators.EMAIL_INPUT_LOGIN).send_keys(TestData.valid_email)
+        browser.find_element(*TestLocators.PASSWORD_INPUT_LOGIN).send_keys(TestData.valid_password)
+        browser.find_element(*TestLocators.LOGIN_BUTTON_LOGIN).click()
+        WebDriverWait(browser, 3).until(
             expected_conditions.visibility_of_element_located(TestLocators.MAKE_ORDER_BUTTON))
-        assert self.driver.current_url == TestUrls.main_url
-        self.driver.quit()
+        assert browser.current_url == TestUrls.main_url, 'Логин с главной страницы не выполнен!'
 
-    def test_login_from_account(self, get_driver):
-        self.driver.get(TestUrls.main_url)
-        self.driver.find_element(*TestLocators.ACCOUNT_BUTTON).click()
-        self.driver.find_element(*TestLocators.EMAIL_INPUT_LOGIN).send_keys(TestData.valid_email)
-        self.driver.find_element(*TestLocators.PASSWORD_INPUT_LOGIN).send_keys(TestData.valid_password)
-        self.driver.find_element(*TestLocators.LOGIN_BUTTON_LOGIN).click()
-        WebDriverWait(self.driver, 3).until(
+    def test_login_from_account(self, browser):
+        browser.get(TestUrls.main_url)
+        browser.find_element(*TestLocators.ACCOUNT_BUTTON).click()
+        browser.find_element(*TestLocators.EMAIL_INPUT_LOGIN).send_keys(TestData.valid_email)
+        browser.find_element(*TestLocators.PASSWORD_INPUT_LOGIN).send_keys(TestData.valid_password)
+        browser.find_element(*TestLocators.LOGIN_BUTTON_LOGIN).click()
+        WebDriverWait(browser, 3).until(
             expected_conditions.visibility_of_element_located(TestLocators.MAKE_ORDER_BUTTON))
-        assert self.driver.current_url == TestUrls.main_url
-        self.driver.quit()
+        assert browser.current_url == TestUrls.main_url, 'Логин из Личного кабинета не выполнен!'
 
-    def test_login_from_registration_form(self, get_driver):
-        self.driver.get(TestUrls.reg_url)
-        self.driver.find_element(*TestLocators.LOGIN_BUTTON_REG).click()
-        self.driver.find_element(*TestLocators.EMAIL_INPUT_LOGIN).send_keys(TestData.valid_email)
-        self.driver.find_element(*TestLocators.PASSWORD_INPUT_LOGIN).send_keys(TestData.valid_password)
-        self.driver.find_element(*TestLocators.LOGIN_BUTTON_LOGIN).click()
-        WebDriverWait(self.driver, 3).until(
+    def test_login_from_registration_form(self, browser):
+        browser.get(TestUrls.reg_url)
+        browser.find_element(*TestLocators.LOGIN_BUTTON_REG).click()
+        browser.find_element(*TestLocators.EMAIL_INPUT_LOGIN).send_keys(TestData.valid_email)
+        browser.find_element(*TestLocators.PASSWORD_INPUT_LOGIN).send_keys(TestData.valid_password)
+        browser.find_element(*TestLocators.LOGIN_BUTTON_LOGIN).click()
+        WebDriverWait(browser, 3).until(
             expected_conditions.visibility_of_element_located(TestLocators.MAKE_ORDER_BUTTON))
-        assert self.driver.current_url == TestUrls.main_url
-        self.driver.quit()
+        assert browser.current_url == TestUrls.main_url, 'Логин со страницы регистрации не выполнен!'
 
-    def test_login_from_recovery_form(self, get_driver):
-        self.driver.get(TestUrls.rec_url)
-        self.driver.find_element(*TestLocators.LOGIN_BUTTON_RECOVERY).click()
-        self.driver.find_element(*TestLocators.EMAIL_INPUT_LOGIN).send_keys(TestData.valid_email)
-        self.driver.find_element(*TestLocators.PASSWORD_INPUT_LOGIN).send_keys(TestData.valid_password)
-        self.driver.find_element(*TestLocators.LOGIN_BUTTON_LOGIN).click()
-        WebDriverWait(self.driver, 3).until(
+    def test_login_from_recovery_form(self, browser):
+        browser.get(TestUrls.rec_url)
+        browser.find_element(*TestLocators.LOGIN_BUTTON_RECOVERY).click()
+        browser.find_element(*TestLocators.EMAIL_INPUT_LOGIN).send_keys(TestData.valid_email)
+        browser.find_element(*TestLocators.PASSWORD_INPUT_LOGIN).send_keys(TestData.valid_password)
+        browser.find_element(*TestLocators.LOGIN_BUTTON_LOGIN).click()
+        WebDriverWait(browser, 3).until(
             expected_conditions.visibility_of_element_located(TestLocators.MAKE_ORDER_BUTTON))
-        assert self.driver.current_url == TestUrls.main_url
-        self.driver.quit()
+        assert browser.current_url == TestUrls.main_url, 'Логин со страницы восстановления не выполнен!'
 
